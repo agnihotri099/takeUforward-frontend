@@ -47,7 +47,7 @@ const styles = {
   },
 };
 
-const SubmissionForm = (props) => {
+const SubmissionForm = ({ onSubmissionSuccess }) => {
   const [formData, setFormData] = useState({
     username: '',
     code_language: 'Python',
@@ -61,14 +61,26 @@ const SubmissionForm = (props) => {
 
  
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post('https://takeuforward-backend.onrender.com/api/submit', formData);
+  //     alert(response.data.message);
+      
+  //   } catch (error) {
+  //     console.error('Submission error:', error);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://takeuforward-backend.onrender.com/api/submit', formData);
-      alert(response.data.message);
-      
+      await axios.post('https://takeuforward-backend.onrender.com/api/submit', formData);
+      alert('Submission successful!');
+      onSubmissionSuccess(); // Trigger refresh of submissions table
     } catch (error) {
       console.error('Submission error:', error);
+      alert('Failed to submit. Please try again.');
     }
   };
 
